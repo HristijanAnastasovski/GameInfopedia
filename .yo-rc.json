@@ -1,0 +1,37 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "mk.finki.gameinfopedia"
+    },
+    "jhipsterVersion": "6.1.2",
+    "applicationType": "monolith",
+    "baseName": "GameInfopedia",
+    "packageName": "mk.finki.gameinfopedia",
+    "packageFolder": "mk/finki/gameinfopedia",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "NWQ1YzdkOTQ2MjY2MWQ0NWU4ZjVhY2E1YzUwZmJjM2Q0NjM5MGE2MDg2YzQ1ZDA0Y2ZlMDQ0ZWI1MmFlMDNlNTNkNzIxYmY4YzQ0ODU5ZWFmNzRkNmIzZDAyMjNlYWNlY2FlN2M5ZDgyMTlmMzFmMzAwNmRkMTRjMDNjYjg5YTY=",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "react",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "testFrameworks": ["protractor"],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false
+  }
+}

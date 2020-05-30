@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity VideoGame.
+    -->
+    <changeSet id="20200524160222-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="publisher_id"
+                                 baseTableName="video_game"
+                                 constraintName="fk_video_game_publisher_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="publisher"/>
+
+        <addForeignKeyConstraint baseColumnNames="minimumcpurequired_id"
+                                 baseTableName="video_game"
+                                 constraintName="fk_video_game_minimumcpurequired_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cpu"/>
+
+        <addForeignKeyConstraint baseColumnNames="minimumgpurequired_id"
+                                 baseTableName="video_game"
+                                 constraintName="fk_video_game_minimumgpurequired_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="gpu"/>
+
+        <addForeignKeyConstraint baseColumnNames="video_game_id"
+                                 baseTableName="video_game_platforms"
+                                 constraintName="fk_video_game_platforms_video_game_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="video_game"/>
+
+        <addForeignKeyConstraint baseColumnNames="platforms_id"
+                                 baseTableName="video_game_platforms"
+                                 constraintName="fk_video_game_platforms_platforms_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="platform"/>
+        
+        <addForeignKeyConstraint baseColumnNames="video_game_id"
+                                 baseTableName="video_game_genres"
+                                 constraintName="fk_video_game_genres_video_game_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="video_game"/>
+
+        <addForeignKeyConstraint baseColumnNames="genres_id"
+                                 baseTableName="video_game_genres"
+                                 constraintName="fk_video_game_genres_genres_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="genre"/>
+        
+    </changeSet>
+</databaseChangeLog>

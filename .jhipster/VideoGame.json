@@ -1,0 +1,87 @@
+{
+    "name": "VideoGame",
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "releasedate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
+        },
+        {
+            "fieldName": "averageRating",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "minimumStorageRequired",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "minimumRAMRequired",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "publisher",
+            "otherEntityRelationshipName": "games",
+            "relationshipName": "publisher",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "cPU",
+            "otherEntityRelationshipName": "videoGame",
+            "relationshipName": "minimumCPURequired",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "gPU",
+            "otherEntityRelationshipName": "videoGame",
+            "relationshipName": "minimumGPURequired",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "platform",
+            "otherEntityRelationshipName": "games",
+            "relationshipName": "platforms",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "genre",
+            "otherEntityRelationshipName": "games",
+            "relationshipName": "genres",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20200524160222",
+    "entityTableName": "video_game",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

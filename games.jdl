@@ -1,0 +1,51 @@
+
+entity Genre {
+	name String
+}
+
+entity Platform {
+	name String
+}
+
+entity Publisher {
+	name String
+    country String
+    description TextBlob
+}
+
+entity VideoGame {
+	title String
+    releasedate LocalDate
+    price Double
+    image Blob
+    description TextBlob
+    averageRating Double
+    minimumStorageRequired Integer
+    minimumRAMRequired Integer
+}
+
+entity CPU {
+	name String
+}
+
+entity GPU {
+	name String
+}
+
+relationship ManyToOne {
+	VideoGame{publisher} to Publisher{games}
+    VideoGame{minimumCPURequired} to CPU
+    VideoGame{minimumGPURequired} to GPU
+}
+
+relationship ManyToMany {
+	VideoGame{platforms} to Platform{games}
+    VideoGame{genres} to Genre{games}
+}
+
+paginate VideoGame with pagination
+
+
+
+
+
