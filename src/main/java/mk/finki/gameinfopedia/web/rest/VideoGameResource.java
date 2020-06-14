@@ -1,5 +1,6 @@
 package mk.finki.gameinfopedia.web.rest;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import mk.finki.gameinfopedia.domain.VideoGame;
 import mk.finki.gameinfopedia.repository.VideoGameRepository;
 import mk.finki.gameinfopedia.web.rest.errors.BadRequestAlertException;
@@ -107,6 +108,14 @@ public class VideoGameResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/video-games-no-pagination")
+    public ResponseEntity<List<VideoGame>> getAllVideoGamesNoPagination() {
+        log.debug("REST request to get all video games");
+
+        List<VideoGame> videoGames = videoGameRepository.findAll();
+        return ResponseEntity.ok().body(videoGames);
+    }
+
     /**
      * {@code GET  /video-games/:id} : get the "id" videoGame.
      *
@@ -119,6 +128,65 @@ public class VideoGameResource {
         Optional<VideoGame> videoGame = videoGameRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(videoGame);
     }
+
+    @GetMapping("/video-games-by-genre-name")
+    public ResponseEntity<List<VideoGame>> getVideoGamesByGenresName(@RequestParam("genrename") String input) {
+        log.debug("REST request to get VideoGame with genre name : {}", input);
+
+        List<VideoGame> videoGames = videoGameRepository.findByGenreName(input);
+        return ResponseEntity.ok().body(videoGames);
+    }
+
+    @GetMapping("/video-games-by-platform-name")
+    public ResponseEntity<List<VideoGame>> getVideoGamesByPlatformName(@RequestParam("platformname") String input) {
+        log.debug("REST request to get VideoGame with platform name : {}", input);
+
+        List<VideoGame> videoGames = videoGameRepository.findByPlatformName(input);
+        return ResponseEntity.ok().body(videoGames);
+    }
+
+    @GetMapping("/video-games-by-publisher-name")
+    public ResponseEntity<List<VideoGame>> getVideoGamesByPublisherName(@RequestParam("publishername") String input) {
+        log.debug("REST request to get VideoGame with publisher name : {}", input);
+
+        List<VideoGame> videoGames = videoGameRepository.findByPublisherName(input);
+        return ResponseEntity.ok().body(videoGames);
+    }
+
+    @GetMapping("/video-games-title-contains")
+    public ResponseEntity<List<VideoGame>> getVideoGamesTitleContains(@RequestParam("title") String input) {
+        log.debug("REST request to get VideoGame that contains : {}", input);
+
+        List<VideoGame> videoGames = videoGameRepository.findVideoGameTitleContains(input);
+        return ResponseEntity.ok().body(videoGames);
+    }
+
+    @GetMapping("/video-games-by-price")
+    public ResponseEntity<List<VideoGame>> getVideoGamesByPrice(@RequestParam("minprice") Double minPrice, @RequestParam("maxprice") Double maxPrice, @RequestParam("ascending") boolean ascending) {
+        log.debug("REST request to get VideoGame where price is between : {} and {}", minPrice, maxPrice);
+
+        if(ascending){
+            List<VideoGame> videoGames = videoGameRepository.findByPriceMinMaxAsc(minPrice, maxPrice);
+            return ResponseEntity.ok().body(videoGames);
+        } else {
+            List<VideoGame> videoGames = videoGameRepository.findByPriceMinMaxDesc(minPrice, maxPrice);
+            return ResponseEntity.ok().body(videoGames);
+        }
+    }
+
+    @GetMapping("/video-games-by-rating")
+    public ResponseEntity<List<VideoGame>> getVideoGamesByRating(@RequestParam("minrating") Double minRating, @RequestParam("maxrating") Double maxRating, @RequestParam("ascending") boolean ascending) {
+        log.debug("REST request to get VideoGame where rating is between : {} and {}", minRating, maxRating);
+
+        if(ascending){
+            List<VideoGame> videoGames = videoGameRepository.findByRatingMinMaxAsc(minRating, maxRating);
+            return ResponseEntity.ok().body(videoGames);
+        } else {
+            List<VideoGame> videoGames = videoGameRepository.findByRatingMinMaxDesc(minRating, maxRating);
+            return ResponseEntity.ok().body(videoGames);
+        }
+    }
+
 
     /**
      * {@code DELETE  /video-games/:id} : delete the "id" videoGame.
