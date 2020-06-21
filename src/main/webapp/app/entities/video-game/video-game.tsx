@@ -16,7 +16,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './video-game.reducer';
+import { getEntitiesNoPagination } from './video-game.reducer';
 import { IVideoGame } from 'app/shared/model/video-game.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -24,41 +24,13 @@ import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IVideoGameProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export type IVideoGameState = IPaginationBaseState;
-
-export class VideoGame extends React.Component<IVideoGameProps, IVideoGameState> {
-  state: IVideoGameState = {
-    ...getSortState(this.props.location, ITEMS_PER_PAGE)
-  };
-
+export class VideoGame extends React.Component<IVideoGameProps> {
   componentDidMount() {
-    this.getEntities();
+    this.props.getEntitiesNoPagination();
   }
-
-  sort = prop => () => {
-    this.setState(
-      {
-        order: this.state.order === 'asc' ? 'desc' : 'asc',
-        sort: prop
-      },
-      () => this.sortEntities()
-    );
-  };
-
-  sortEntities() {
-    this.getEntities();
-    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=${this.state.sort},${this.state.order}`);
-  }
-
-  handlePagination = activePage => this.setState({ activePage }, () => this.sortEntities());
-
-  getEntities = () => {
-    const { activePage, itemsPerPage, sort, order } = this.state;
-    this.props.getEntities(activePage - 1, itemsPerPage, `${sort},${order}`);
-  };
 
   render() {
-    const { videoGameList, match, totalItems } = this.props;
+    const { videoGameList, match } = this.props;
     return (
       <div>
         <h2 id="video-game-heading">
@@ -73,31 +45,23 @@ export class VideoGame extends React.Component<IVideoGameProps, IVideoGameState>
             <Table responsive>
               <thead>
                 <tr>
-                  <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('title')}>
-                    Title <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('releasedate')}>
-                    Releasedate <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('price')}>
-                    Price <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('image')}>
+                  <th className="hand">ID</th>
+                  <th className="hand">Title</th>
+                  <th className="hand">Releasedate</th>
+                  <th className="hand">Price</th>
+                  <th className="hand">
                     Image <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={this.sort('description')}>
+                  <th className="hand">
                     Description <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={this.sort('averageRating')}>
+                  <th className="hand">
                     Average Rating <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={this.sort('minimumStorageRequired')}>
+                  <th className="hand">
                     Minimum Storage Required <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={this.sort('minimumRAMRequired')}>
+                  <th className="hand">
                     Minimum RAM Required <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
@@ -175,20 +139,6 @@ export class VideoGame extends React.Component<IVideoGameProps, IVideoGameState>
             <div className="alert alert-warning">No Video Games found</div>
           )}
         </div>
-        <div className={videoGameList && videoGameList.length > 0 ? '' : 'd-none'}>
-          <Row className="justify-content-center">
-            <JhiItemCount page={this.state.activePage} total={totalItems} itemsPerPage={this.state.itemsPerPage} />
-          </Row>
-          <Row className="justify-content-center">
-            <JhiPagination
-              activePage={this.state.activePage}
-              onSelect={this.handlePagination}
-              maxButtons={5}
-              itemsPerPage={this.state.itemsPerPage}
-              totalItems={this.props.totalItems}
-            />
-          </Row>
-        </div>
       </div>
     );
   }
@@ -200,7 +150,7 @@ const mapStateToProps = ({ videoGame }: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getEntities
+  getEntitiesNoPagination
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
