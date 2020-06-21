@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction, ICrudSearchAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -109,6 +109,12 @@ export default (state: VideoGameState = initialState, action): VideoGameState =>
 };
 
 const apiUrl = 'api/video-games';
+const apiUrlNoPagination = 'api/video-games-no-pagination';
+const apiUrlByTitle = 'api/video-games-title-contains';
+const apiUrlFindByGenreName = 'api/video-games-by-genre-name';
+const apiUrlFindByPlatformName = 'api/video-games-by-platform-name';
+const apiUrlFindByPublisherName = 'api/video-games-by-publisher-name';
+const apiUrlFindByRating = 'api/video-games-by-rating';
 
 // Actions
 
@@ -117,6 +123,48 @@ export const getEntities: ICrudGetAllAction<IVideoGame> = (page, size, sort) => 
   return {
     type: ACTION_TYPES.FETCH_VIDEOGAME_LIST,
     payload: axios.get<IVideoGame>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getEntitiesNoPagination: ICrudGetAllAction<IVideoGame> = () => ({
+  type: ACTION_TYPES.FETCH_VIDEOGAME_LIST,
+  payload: axios.get<IVideoGame>(`${apiUrlNoPagination}?cacheBuster=${new Date().getTime()}`)
+});
+
+export const getEntitiesByTitle: ICrudSearchAction<IVideoGame> = (title: String) => ({
+  type: ACTION_TYPES.FETCH_VIDEOGAME_LIST,
+  payload: axios.get<IVideoGame>(`${apiUrlByTitle}?title=${title}`)
+});
+
+export const findByGenreName: ICrudSearchAction<IVideoGame> = (genre: String) => {
+  const requestUrl = `${apiUrlFindByGenreName}?genrename=${genre}`;
+  return {
+    type: ACTION_TYPES.FETCH_VIDEOGAME_LIST,
+    payload: axios.get<IVideoGame>(requestUrl)
+  };
+};
+
+export const findByPlatformName: ICrudSearchAction<IVideoGame> = (platform: String) => {
+  const requestUrl = `${apiUrlFindByPlatformName}?platformname=${platform}`;
+  return {
+    type: ACTION_TYPES.FETCH_VIDEOGAME_LIST,
+    payload: axios.get<IVideoGame>(requestUrl)
+  };
+};
+
+export const findByPublisherName: ICrudSearchAction<IVideoGame> = (publisher: String) => {
+  const requestUrl = `${apiUrlFindByPublisherName}?publishername=${publisher}`;
+  return {
+    type: ACTION_TYPES.FETCH_VIDEOGAME_LIST,
+    payload: axios.get<IVideoGame>(requestUrl)
+  };
+};
+
+export const findByRating: ICrudSearchAction<IVideoGame> = (minRating: String, sort: String) => {
+  const requestUrl = `${apiUrlFindByRating}?minrating=${minRating}&maxrating=10&ascending=${sort === 'Ascending'}`;
+  return {
+    type: ACTION_TYPES.FETCH_VIDEOGAME_LIST,
+    payload: axios.get<IVideoGame>(requestUrl)
   };
 };
 

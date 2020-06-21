@@ -1,0 +1,71 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url('fonts/icomoon.eot?idtye5');
+  src: url('fonts/icomoon.eot?idtye5#iefix') format('embedded-opentype'), url('fonts/icomoon.ttf?idtye5') format('truetype'),
+    url('fonts/icomoon.woff?idtye5') format('woff'), url('fonts/icomoon.svg?idtye5#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^='icon-'],
+[class*=' icon-'] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-cpu:before {
+  content: '\e900';
+}
+.icon-gpu:before {
+  content: '\e901';
+}
+.icon-hard-disk-drive:before {
+  content: '\e902';
+}
+.icon-ram:before {
+  content: '\e903';
+}
+
+.game-image {
+  width: 318px;
+  height: 310px;
+  align-self: center;
+}
+
+.button {
+  margin-left: 38%;
+}
+
+.image-rounded {
+  border-radius: 0.25rem !important;
+}
+
+.inline {
+  display: flex;
+}
+
+.leveled {
+  padding-top: 1px;
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.icon-text {
+  margin-top: 10px;
+  padding-right: 65px;
+}
+
+.spaced-out {
+  margin-left: 5%;
+}
